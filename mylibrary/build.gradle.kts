@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-//    id("maven-publish")
+    `maven-publish` // Add this
 }
 
 
@@ -9,6 +9,14 @@ plugins {
 android {
     namespace = "com.eddietest.mylibrary"
     compileSdk = 34
+
+
+    publishing { // Add this
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 
     defaultConfig {
         minSdk = 24
@@ -51,14 +59,17 @@ dependencies {
 }
 
 
-//publishing {
-//    publications {
-//        create<MavenPublication>("release") {
-//            from(components["release"])
-//            groupId = "com.eddietest.mylibrary"
-//            artifactId = "box-compose-library"
-//            version = "1.0.0"
-//        }
-//    }
-//}
+// Add this
+publishing {
+    publications {
+        create("release", MavenPublication::class) {
+            groupId = "com.eddietest.mylibrary" // com.github.<yourusername>
+            artifactId = "box-compose-library" // your repository name
+            version = "0.0.1" // version we want to publish (say 0.0.1)
 
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
+}
