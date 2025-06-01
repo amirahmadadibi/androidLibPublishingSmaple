@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.eddietest.mylibrary"
-    compileSdk = 34
+    compileSdk = 35
 
 
     publishing { // Add this
